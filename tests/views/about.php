@@ -1,0 +1,1 @@
+<!DOCTYPE html><html><head><title>About</title><?php if (!$withInlineCssStyles) { echo $view->assets()->render(); } $view->asset('app.css'); ?></head><body><h1>About</h1></body></html>

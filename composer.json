@@ -1,0 +1,60 @@
+{
+    "name": "tobento/service-mail",
+    "type": "library",
+    "description": "Mailer interface for PHP applications.",
+    "keywords": [
+        "tobento",
+        "package",
+        "PHP",
+        "mail",
+        "email"
+    ],
+    "homepage": "https://www.tobento.ch",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tobias Strub",
+            "email": "info@tobento.ch",
+            "homepage": "https://www.tobento.ch"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=8.0",
+        "tobento/service-view": "^1.0.7",
+        "tobento/service-filesystem": "^1.0.5",
+        "tobento/service-autowire": "^1.0",
+        "symfony/mailer": "^6.0",
+        "tijsverkoyen/css-to-inline-styles": "^2.2.5",
+        "psr/container": "^2.0",
+        "psr/http-message": "^1.0",
+        "psr/event-dispatcher": "^1.0"
+    },
+    "suggest": {
+        "tobento/service-queue": "May be used to support queuing messages"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "vimeo/psalm": "^4.0",
+        "tobento/service-event": "^1.0",
+        "tobento/service-container": "^1.0",
+        "tobento/service-collection": "^1.0",
+        "tobento/service-queue": "^1.0",
+        "nyholm/psr7": "^1.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tobento\\Service\\Mail\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tobento\\Service\\Mail\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit --testdox --colors=always",
+        "psalm": "vendor/bin/psalm"
+    }
+}
