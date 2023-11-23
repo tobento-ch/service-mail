@@ -117,6 +117,7 @@ class LazyMailersTest extends TestCase
         ]);
         
         $this->assertSame('primary', $mailers->mailer('primary')?->name());
+        $this->assertSame($mailers->mailer('primary'), $mailers->mailer('primary'));
     }
     
     public function testUsingClosure()
@@ -138,5 +139,6 @@ class LazyMailersTest extends TestCase
         ]);
         
         $this->assertSame('primary', $mailers->mailer('primary')?->name());
+        $this->assertSame($mailers->mailer('primary'), $mailers->mailer('primary'));
     }    
 }
