@@ -90,7 +90,10 @@ class LazyMailers implements MailersInterface, MailerInterface
         
         // create mailer from callable:
         if (is_callable($this->mailers[$name])) {
-            return $this->autowire->call($this->mailers[$name], ['name' => $name]);
+            return $this->createdMailers[$name] = $this->autowire->call(
+                $this->mailers[$name],
+                ['name' => $name]
+            );
         }
         
         // create mailer from factory:
