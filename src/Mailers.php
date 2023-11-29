@@ -72,6 +72,16 @@ class Mailers implements MailersInterface, MailerInterface
     }
     
     /**
+     * Returns all mailer names.
+     *
+     * @return array<int, string>
+     */
+    public function names(): array
+    {
+        return array_keys($this->mailers);
+    }
+    
+    /**
      * Sends the message.
      *
      * @param MessageInterface $message
