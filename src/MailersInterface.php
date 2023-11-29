@@ -25,4 +25,11 @@ interface MailersInterface
      * @return null|MailerInterface
      */
     public function mailer(string $name): null|MailerInterface;
+    
+    /**
+     * Returns all mailer names.
+     *
+     * @return array<int, string>
+     */
+    public function names(): array;
 }
