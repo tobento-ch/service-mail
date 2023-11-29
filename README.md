@@ -1,6 +1,6 @@
 # Mail Service
 
-Mailer interface for PHP applications using [Symfony Mailer](https://github.com/symfony/mailer) as default mailer implementation.
+Mailer interface for PHP applications using the [Symfony Mailer](https://github.com/symfony/mailer) as default mailer implementation.
 
 ## Table of Contents
 
@@ -20,14 +20,15 @@ Mailer interface for PHP applications using [Symfony Mailer](https://github.com/
         - [Send With Mailer](#send-with-mailer)
         - [Custom Parameters](#custom-parameters)
     - [Mailer](#mailer)
-        - [Send Message](#send-message)
-        - [Events](#events)
+        - [Null Mailer](#null-mailer)
+        - [SF Mailer](#sf-mailer)
     - [Mailers](#mailers)
         - [Default Mailers](#default-mailers)
         - [Lazy Mailers](#lazy-mailers)
     - [Templating](#templating)
         - [Writing Views](#writing-views)
         - [Render Templates](#render-templates)
+    - [Events](#events)
     - [Symfony](#symfony)
         - [Symfony Mailer](#symfony-mailer)
             - [Events Support](#events-support)
@@ -88,7 +89,7 @@ class SomeService
 }
 ```
 
-Check out the [Symfony Mailer](#symfony-mailer) to create the mailer.
+Check out the available [Mailers](#mailer).
 
 Check out the [Message](#message) to learn more about it.
 
@@ -318,38 +319,23 @@ Check out the [Symfony Custom Parameters Support](#symfony-custom-parameters-sup
 
 ## Mailer
 
-### Send Message
+### Null Mailer
+
+The ```NullMailer::class``` does not send any mail message at all which may be useful while developing (or testing).
 
 ```php
-use Tobento\Service\Mail\Message;
-use Tobento\Service\Mail\MailerException;
+use Tobento\Service\Mail\NullMailer;
+use Tobento\Service\Mail\MailerInterface;
 
-$message = (new Message())
-    ->from('from@example.com')
-    ->to('to@example.com')
-    ->subject('Subject')
-    ->html('<p>Lorem Ipsum</p>');
+$mailer = new NullMailer(name: 'null');
 
-try {
-    $mailer->send($message);
-} catch (MailerException $e) {
-    // do something
-}
+var_dump($mailer instanceof MailerInterface);
+// bool(true)
 ```
 
-Check out the [Symfony Mailer](#symfony-mailer) to create the mailer.
+### SF Mailer
 
-### Events
-
-You may listen to the following events if your mailer is configured to support it.
-
-| Event | Description |
-| --- | --- |
-| ```Tobento\Service\Mail\Event\MessageSent::class``` | The Event will be fired after sending the message. |
-| ```Tobento\Service\Mail\Event\MessageNotSent::class``` | The Event is fired if the message could not be sent. |
-| ```Tobento\Service\Mail\Event\MessageQueued::class``` | The Event will be fired after queuing the message. |
-
-Check out the [Symfony Mailer - Events Support](#events-support) to create the mailer supporting events.
+Documentation is in the [Symfony Mailer](#symfony-mailer) section.
 
 ## Mailers
 
@@ -530,6 +516,18 @@ class SomeController
     }
 }
 ```
+
+## Events
+
+You may listen to the following events if your mailer is configured to support it.
+
+| Event | Description |
+| --- | --- |
+| ```Tobento\Service\Mail\Event\MessageSent::class``` | The Event will be fired after sending the message. |
+| ```Tobento\Service\Mail\Event\MessageNotSent::class``` | The Event is fired if the message could not be sent. |
+| ```Tobento\Service\Mail\Event\MessageQueued::class``` | The Event will be fired after queuing the message. |
+
+Check out the [Symfony Mailer - Events Support](#events-support) to create the mailer supporting events.
 
 ## Symfony
 
