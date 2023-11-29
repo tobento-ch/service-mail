@@ -75,6 +75,7 @@ class LazyMailersTest extends TestCase
         $this->assertInstanceof(MailersInterface::class, $mailers);
         $this->assertInstanceof(MailerInterface::class, $mailers->mailer(name: 'default'));
         $this->assertSame(null, $mailers->mailer(name: 'foo'));
+        $this->assertSame(['default'], $mailers->names());
     }
     
     public function testMailerInterfaceMethods()

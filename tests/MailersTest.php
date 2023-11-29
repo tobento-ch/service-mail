@@ -64,6 +64,7 @@ class MailersTest extends TestCase
         $this->assertInstanceof(MailerInterface::class, $mailers->mailer(name: 'default'));
         $this->assertInstanceof(MailerInterface::class, $mailers->mailer(name: 'foo'));
         $this->assertSame(null, $mailers->mailer(name: 'bar'));
+        $this->assertSame(['default', 'foo'], $mailers->names());
     }
     
     public function testMailerInterfaceMethods()
