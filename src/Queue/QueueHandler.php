@@ -32,10 +32,12 @@ class QueueHandler implements QueueHandlerInterface
      *
      * @param QueueInterface $queue
      * @param RendererInterface $renderer
+     * @param null|string $queueName The default queue used if no specific is defined on the message.
      */
     public function __construct(
         protected QueueInterface $queue,
         protected RendererInterface $renderer,
+        protected null|string $queueName = null,
     ) {}
     
     /**
@@ -73,6 +75,8 @@ class QueueHandler implements QueueHandlerInterface
             
             if ($queue->name()) {
                 $job->queue($queue->name());
+            } elseif ($this->queueName) {
+                $job->queue($this->queueName);
             }
             
             if ($queue->delay() > 0) {
