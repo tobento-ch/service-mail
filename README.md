@@ -479,7 +479,7 @@ Furthermore, use css file assests to design your template. When the template get
 
 ### Render Templates
 
-You may want to render a template for a email web view, debugging or other purposes.
+You may want to render a template for an email web view, debugging or other purposes.
 
 ```php
 use Tobento\Service\Mail\RendererInterface;
@@ -633,6 +633,8 @@ $mailer = new Symfony\Mailer(
     queueHandler: new QueueHandler(
         queue: $queue, // QueueInterface
         renderer: $renderer, // RendererInterface
+        // you may define the default queue used if no specific is defined on the message.
+        queueName: 'mails', // null|string
     ),
 );
 ```
@@ -676,7 +678,7 @@ $emailFactory = new Symfony\EmailFactory(
     config: [
         'from' => 'from@example.com',
         // with object:
-        'from' => new Address('from@example.com'),
+        'from' => new Address('from@example.com', 'Name'),
         
         'replyTo' => 'reply@example.com',
         // with object:
