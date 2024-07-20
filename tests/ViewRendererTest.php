@@ -118,5 +118,19 @@ class ViewRendererTest extends TestCase
             '<!DOCTYPE html><html><head><title>About</title><link href="https://example.com/src/app.css" rel="stylesheet" type="text/css"></head><body><h1>About</h1></body></html>',
             $content
         );
-    }    
+    }
+    
+    public function testReplacesRootVars()
+    {
+        $renderer = $this->createViewRenderer();
+        
+        $content = $renderer->renderTemplate(
+            new Template('rootvars', [])
+        );
+        
+        $this->assertSame(
+            '<!doctype html><html><head><title>About</title></head><body style="font-size:100%;"><h1 style="font-family:Georgia, \'Times New Roman\', Times, serif; color:#0d0e0e;">About</h1></body></html>',
+            preg_replace('/([\[(:>\+])\s+/', '$1', $content)
+        );
+    }
 }
