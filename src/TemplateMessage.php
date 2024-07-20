@@ -65,6 +65,10 @@ class TemplateMessage implements TemplateMessageInterface
             ));
         }
         
+        if (is_string($file) && str_starts_with($file, 'http')) {
+            return $file;
+        }
+        
         if (is_string($file)) {            
             $file = new File($file);
         }
