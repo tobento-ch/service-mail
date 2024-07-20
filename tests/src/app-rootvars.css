@@ -1,0 +1,5 @@
+:root {
+  --font-primary: Georgia, "Times New Roman", Times, serif;
+  --color-text: #0d0e0e;
+}
+body {font-size: 100%;} h1 {font-family: var(--font-primary); color: var(--color-text);}
