@@ -86,4 +86,12 @@ class TemplateMessageTest extends TestCase
 
         $tm->embed(file: (new Psr17Factory())->createStreamFromFile(__DIR__.'/src/image.jpg'));
     }
+    
+    public function testEmbedMethodWithUrl()
+    {
+        $tm = new TemplateMessage(subject: 'Lorem');
+        
+        $this->assertSame('https://example.com/image.jpg', $tm->embed(file: 'https://example.com/image.jpg'));
+        $this->assertSame('http://example.com/image.jpg', $tm->embed(file: 'http://example.com/image.jpg'));
+    }
 }
