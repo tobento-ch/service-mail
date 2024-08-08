@@ -47,6 +47,13 @@ interface AddressesInterface extends IteratorAggregate, JsonSerializable, String
     public function all(): array;
     
     /**
+     * Returns all email addresses.
+     *
+     * @return array<int, string>
+     */
+    public function emails(): array;
+    
+    /**
      * Returns true if has no addresses, otherwise false.
      *
      * @return bool
