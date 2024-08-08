@@ -74,6 +74,22 @@ class Addresses implements AddressesInterface
     }
     
     /**
+     * Returns all email addresses.
+     *
+     * @return array<int, string>
+     */
+    public function emails(): array
+    {
+        $emails = [];
+        
+        foreach($this->all() as $address) {
+            $emails[] = $address->email();
+        }
+        
+        return $emails;
+    }
+    
+    /**
      * Returns the number of addresses.
      *
      * @return int
