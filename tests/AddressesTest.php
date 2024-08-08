@@ -71,6 +71,20 @@ class AddressesTest extends TestCase
         $this->assertSame(2, $addresses->count());
     }
     
+    public function testEmailsMethod()
+    {
+        $addresses = new Addresses();
+        
+        $this->assertSame([], $addresses->emails());
+        
+        $addresses = new Addresses(
+            new Address('from@example.com'),
+            new Address('to@example.com'),
+        );
+        
+        $this->assertSame(['from@example.com', 'to@example.com'], $addresses->emails());
+    }
+    
     public function testEmptyMethod()
     {
         $addresses = new Addresses();
