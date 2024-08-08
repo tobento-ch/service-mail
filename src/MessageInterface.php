@@ -36,6 +36,14 @@ interface MessageInterface extends JsonSerializable, Stringable
     public function getTo(): AddressesInterface;
     
     /**
+     * Add an address to send to.
+     *
+     * @param string|AddressInterface ...$address
+     * @return static $this
+     */
+    public function to(string|AddressInterface ...$address): static;
+    
+    /**
      * Returns the addresses to send cc.
      *
      * @return AddressesInterface
