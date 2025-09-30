@@ -112,7 +112,7 @@ class Addresses implements AddressesInterface
     /**
      * Get the iterator. 
      *
-     * @return Traversable
+     * @return Traversable<int, AddressInterface>
      */
     public function getIterator(): Traversable
     {
@@ -138,6 +138,6 @@ class Addresses implements AddressesInterface
      */
     public function __toString(): string
     {
-        return json_encode($this->jsonSerialize());
+        return (string)json_encode($this->jsonSerialize());
     }
 }

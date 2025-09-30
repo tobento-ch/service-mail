@@ -18,7 +18,7 @@ use JsonSerializable;
 use Stringable;
 
 /**
- * ParametersInterface
+ * @extends IteratorAggregate<int, ParameterInterface>
  */
 interface ParametersInterface extends IteratorAggregate, JsonSerializable, Stringable
 {

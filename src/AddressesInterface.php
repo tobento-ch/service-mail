@@ -19,7 +19,7 @@ use Stringable;
 use Countable;
 
 /**
- * AddressesInterface
+ * @extends IteratorAggregate<int, AddressInterface>
  */
 interface AddressesInterface extends IteratorAggregate, JsonSerializable, Stringable, Countable
 {

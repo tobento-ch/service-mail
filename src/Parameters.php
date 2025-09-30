@@ -93,7 +93,7 @@ class Parameters implements ParametersInterface
     /**
      * Get the iterator. 
      *
-     * @return Traversable
+     * @return Traversable<int, ParameterInterface>
      */
     public function getIterator(): Traversable
     {
@@ -125,6 +125,6 @@ class Parameters implements ParametersInterface
      */
     public function __toString(): string
     {
-        return json_encode($this->jsonSerialize());
+        return (string)json_encode($this->jsonSerialize());
     }
 }
