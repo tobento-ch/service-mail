@@ -1,5 +1,6 @@
 {
     "name": "tobento/service-mail",
+    "version": "2.0",
     "type": "library",
     "description": "Mailer interface for PHP applications.",
     "keywords": [
@@ -21,27 +22,27 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.0",
-        "tobento/service-view": "^1.0.7",
-        "tobento/service-filesystem": "^1.0.5",
-        "tobento/service-autowire": "^1.0",
-        "symfony/mailer": "^6.0",
-        "tijsverkoyen/css-to-inline-styles": "^2.2.5",
+        "php": ">=8.4",
+        "tobento/service-view": "^2.0",
+        "tobento/service-filesystem": "^2.0",
+        "tobento/service-autowire": "^2.0",
         "psr/container": "^2.0",
-        "psr/http-message": "^1.0",
-        "psr/event-dispatcher": "^1.0"
+        "psr/http-message": "^2.0",
+        "psr/event-dispatcher": "^1.0",
+        "symfony/mailer": "^7.3",
+        "tijsverkoyen/css-to-inline-styles": "^2.3"
     },
     "suggest": {
         "tobento/service-queue": "May be used to support queuing messages"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.5",
-        "vimeo/psalm": "^4.0",
-        "tobento/service-event": "^1.0",
-        "tobento/service-container": "^1.0",
-        "tobento/service-collection": "^1.0",
-        "tobento/service-queue": "^1.0",
-        "nyholm/psr7": "^1.4"
+        "phpunit/phpunit": "^12.3",
+        "vimeo/psalm": "^6.13",
+        "tobento/service-event": "^2.0",
+        "tobento/service-container": "^2.0",
+        "tobento/service-collection": "^2.0",
+        "tobento/service-queue": "^2.0",
+        "nyholm/psr7": "^1.8"
     },
     "autoload": {
         "psr-4": {

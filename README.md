@@ -51,7 +51,7 @@ composer require tobento/service-mail
 
 ## Requirements
 
-- PHP 8.0 or greater
+- PHP 8.4 or greater
 
 ## Highlights
 
@@ -72,7 +72,7 @@ class SomeService
 {
     public function send(MailerInterface $mailer): void
     {
-        $message = (new Message())
+        $message = new Message()
             ->from('from@example.com')
             ->to('to@example.com')
             //->cc('cc@example.com')
@@ -101,7 +101,7 @@ Check out the [Message](#message) to learn more about it.
 use Tobento\Service\Mail\Message;
 use Tobento\Service\Mail\Address;
 
-$message = (new Message())
+$message = new Message()
     // email address as a simple string:
     ->from('from@example.com')
     
@@ -130,7 +130,7 @@ $message = (new Message())
 use Tobento\Service\Mail\Message;
 use Tobento\Service\Mail\Template;
 
-$message = (new Message())
+$message = new Message()
     // content defined as a string:
     ->subject('Subject')
     ->text('Lorem Ipsum')
@@ -157,7 +157,7 @@ use Tobento\Service\Mail\Message;
 use Tobento\Service\Mail\Parameter;
 use Tobento\Service\Mail\Address;
 
-$message = (new Message())
+$message = new Message()
     // Text header:
     ->parameter(new Parameter\TextHeader(
         name: 'X-Custom-Header',
@@ -188,7 +188,7 @@ use Tobento\Service\Mail\Parameter;
 use Tobento\Service\Filesystem\File;
 use Psr\Http\Message\StreamInterface;
 
-$message = (new Message())
+$message = new Message()
     // File defined as string:
     ->parameter(new Parameter\File(
         file: '/path/to/document.pdf',
@@ -228,7 +228,7 @@ $message = (new Message())
 use Tobento\Service\Mail\Message;
 use Tobento\Service\Mail\Parameter;
 
-$message = (new Message())
+$message = new Message()
     // Tags:
     ->parameter(new Parameter\Tags(['tagname']))
     
@@ -246,7 +246,7 @@ You may queue your message if your mailer is configured to support it.
 use Tobento\Service\Mail\Message;
 use Tobento\Service\Mail\Parameter;
 
-$message = (new Message())
+$message = new Message()
     ->parameter(new Parameter\Queue(
         // you may specify the queue to be used:
         name: 'secondary',
@@ -281,7 +281,7 @@ Check out the [Mailers](#mailers) for more detail.
 use Tobento\Service\Mail\Message;
 use Tobento\Service\Mail\Parameter;
 
-$message = (new Message())
+$message = new Message()
     ->parameter(new Parameter\SendWithMailer(name: 'mailchimp'));
 ```
 
@@ -423,7 +423,7 @@ The following examples are aimed for the default renderer ```Tobento\Service\Mai
 ```php
 use Tobento\Service\Mail\Message;
 
-$message = (new Message())
+$message = new Message()
     //...
     ->htmlTemplate(
         name: 'email/welcome',
@@ -505,7 +505,7 @@ class SomeController
         );
         
         // render message contents:
-        $message = (new Message())
+        $message = new Message()
             ->htmlTemplate('email/welcome', ['name' => 'John']);
         
         if ($message->getHtml() instanceof TemplateInterface) {
@@ -710,7 +710,7 @@ If you create a message without text content, it will be created from your html 
 ```php
 use Tobento\Service\Mail\Message;
 
-$message = (new Message())
+$message = new Message()
     // will be created from the html:
     //->text('Lorem Ipsum')
     
