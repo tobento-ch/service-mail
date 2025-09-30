@@ -103,7 +103,7 @@ class MessageFactory implements MessageFactoryInterface
         try {
             $data = json_decode($json, true, JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
-            throw new MessageException($e->getMessage(), (int)$e->getCode(), $e);
+            throw new MessageException($e->getMessage(), $e->getCode(), $e);
         }
         
         if (!is_array($data)) {
@@ -116,7 +116,7 @@ class MessageFactory implements MessageFactoryInterface
     /**
      * To address.
      *
-     * @param mixed $address
+     * @param mixed $addresses
      * @return null|AddressesInterface
      */
     protected function toAddresses(mixed $addresses): null|AddressesInterface
