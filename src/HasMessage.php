@@ -331,7 +331,7 @@ trait HasMessage
      */
     public function __toString(): string
     {
-        return json_encode($this->jsonSerialize());
+        return (string)json_encode($this->jsonSerialize());
     }
     
     /**
