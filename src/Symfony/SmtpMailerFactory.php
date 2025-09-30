@@ -79,7 +79,7 @@ class SmtpMailerFactory implements MailerFactoryInterface
     protected function createTransportFromConfig(array $config = []): EsmtpTransport
     {
         return (new EsmtpTransportFactory())->create(new Dsn(
-            !empty($config['encryption']) && $config['encryption'] === 'tls' ? (($config['port'] == 465) ? 'smtps' : 'smtp') : '',
+            !empty($config['encryption']) && $config['encryption'] === 'tls' ? (($config['port'] == 465) ? 'smtps' : 'smtp') : 'smtp',
             $config['host'] ?? '',
             $config['user'] ?? null,
             $config['password'] ?? null,
