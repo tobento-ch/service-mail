@@ -61,7 +61,8 @@ class TemplateMessage implements TemplateMessageInterface
             $resource = fopen('php://temp', 'r+');
             fwrite($resource, (string)$file);
             
-            $this->email->embed($resource, $cid, (string)$mimeType);
+            $this->email->addPart(new DataPart($resource, $cid, $mimeType)->asInline());
+            
             return 'cid:'.$cid;
         }
         
@@ -69,10 +70,7 @@ class TemplateMessage implements TemplateMessageInterface
             $file = new File($file);
         }
         
-        $this->email->embedFromPath($file->getFile(), $cid);
-        
-        // mailer 6.2 with php 8.1
-        // $this->email->addPart((new DataPart(new FilePart($file->getFile()), $cid))->asInline());
+        $this->email->addPart(new DataPart(new FilePart($file->getFile()), $cid)->asInline());
         
         return 'cid:'.$cid;
     }
