@@ -23,8 +23,9 @@ use Tobento\Service\Mail\ParameterInterface;
 use Tobento\Service\Mail\Parameter;
 use Symfony\Component\Mailer\Header\MetadataHeader;
 use Symfony\Component\Mailer\Header\TagHeader;
-use Symfony\Component\Mime\Email;
 use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\HtmlToTextConverter\DefaultHtmlToTextConverter;
 use Symfony\Component\Mime\Part\DataPart;
 use Symfony\Component\Mime\Part\File;
 use Psr\Http\Message\StreamInterface;
@@ -214,12 +215,10 @@ class EmailFactory implements EmailFactoryInterface
         }
         
         // create text from html:
-        // will be redone with Symfony\Component\Mime\HtmlToTextConverter\HtmlToTextConverterInterface
-        // in a later version when we use php >= 8.1
         if (is_null($message->getText()) && is_string($email->getHtmlBody())) {
-            $text = (new HtmlToTextConverter)->convert($email->getHtmlBody());            
+            $text = new DefaultHtmlToTextConverter()->convert($email->getHtmlBody(), 'UTF-8');
             $email->text($text);
-        }        
+        }
         
         return $email;
     }
@@ -230,6 +229,7 @@ class EmailFactory implements EmailFactoryInterface
      * @param MessageInterface $message
      * @param Email $email
      * @return Email
+     * @psalm-suppress UndefinedInterfaceMethod
      */
     protected function handleFiles(MessageInterface $message, Email $email): Email
     {
@@ -243,15 +243,22 @@ class EmailFactory implements EmailFactoryInterface
             if (!$file->file()->isFile()) {
                 continue;
             }
-            
+                
             if ($file->isInline()) {
-                $email->embedFromPath($file->file()->getFile(), $file->filename());
+                $email->addPart(
+                    new DataPart(
+                        new File($file->file()->getFile()),
+                        $file->filename(),
+                    )->asInline()
+                );
             } else {
-                $email->attachFromPath($file->file()->getFile(), $file->filename());
+                $email->addPart(
+                    new DataPart(
+                        new File($file->file()->getFile()),
+                        $file->filename(),
+                    )
+                );
             }
-            
-            // mailer 6.2 with php 8.1
-            //$email->addPart(new DataPart(new File($file->file()->getFile())));
         }
         
         $files = $message->parameters()->filter(
@@ -260,16 +267,20 @@ class EmailFactory implements EmailFactoryInterface
         
         foreach($files as $file) {
             if ($file->isInline()) {
-                $email->embed(
-                    $this->createResourceFromStream($file->stream()),
-                    $file->filename(),
-                    $file->mimeType()
+                $email->addPart(
+                    new DataPart(
+                        $this->createResourceFromStream($file->stream()),
+                        $file->filename(),
+                        $file->mimeType(),
+                    )->asInline()
                 );
             } else {
-                $email->attach(
-                    $this->createResourceFromStream($file->stream()),
-                    $file->filename(),
-                    $file->mimeType()
+                $email->addPart(
+                    new DataPart(
+                        $this->createResourceFromStream($file->stream()),
+                        $file->filename(),
+                        $file->mimeType(),
+                    )
                 );
             }
         }
@@ -280,9 +291,13 @@ class EmailFactory implements EmailFactoryInterface
         
         foreach($files as $file) {
             if ($file->isInline()) {
-                $email->embed($file->resource(), $file->filename(), $file->mimeType());
+                $email->addPart(
+                    new DataPart($file->resource(), $file->filename(), $file->mimeType())->asInline()
+                );
             } else {
-                $email->attach($file->resource(), $file->filename(), $file->mimeType());
+                $email->addPart(
+                    new DataPart($file->resource(), $file->filename(), $file->mimeType())
+                );
             }
         }
         
@@ -298,6 +313,11 @@ class EmailFactory implements EmailFactoryInterface
     protected function createResourceFromStream(StreamInterface $stream)
     {
         $resource = fopen('php://temp', 'r+');
+        
+        if ($resource === false) {
+            throw new \RuntimeException('Could not open php://temp');
+        }
+        
         fwrite($resource, (string)$stream);
         return $resource;
     }
@@ -308,6 +328,7 @@ class EmailFactory implements EmailFactoryInterface
      * @param MessageInterface $message
      * @param Email $email
      * @return Email
+     * @psalm-suppress InvalidArgument
      */
     protected function handleHeaders(MessageInterface $message, Email $email): Email
     {
@@ -354,6 +375,7 @@ class EmailFactory implements EmailFactoryInterface
      * @param MessageInterface $message
      * @param Email $email
      * @return Email
+     * @psalm-suppress UndefinedInterfaceMethod
      */
     protected function handleMetadata(MessageInterface $message, Email $email): Email
     {
@@ -376,6 +398,7 @@ class EmailFactory implements EmailFactoryInterface
      * @param MessageInterface $message
      * @param Email $email
      * @return Email
+     * @psalm-suppress UndefinedInterfaceMethod
      */
     protected function handleTags(MessageInterface $message, Email $email): Email
     {
