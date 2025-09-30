@@ -116,7 +116,7 @@ class ViewRenderer implements RendererInterface
         $css = preg_replace_callback('/var\((--[a-zA-Z0-9-_]+)(?:\)|,\s*(.*)\))/', $callback, $css);
         
         // replaces :root vars:
-        $css = preg_replace('/--[a-zA-Z0-9-_]+[:](.*)\;/', '', $css);
+        $css = (string)preg_replace('/--[a-zA-Z0-9-_]+[:](.*)\;/', '', $css);
         
         return $css;
     }
